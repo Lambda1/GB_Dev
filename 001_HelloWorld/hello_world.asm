@@ -1,7 +1,9 @@
 SECTION "Header", rom0[$100] ; ROMバンク0のカートリッジヘッダ
 EntryPoint:
     di       ; 割り込み無効
-    jp Start ; スタート処理へ 
+    jp Start ; スタート処理へ
+
+; ヘッダ構成
 rept $150 - $104
     db 0
 endr
@@ -21,9 +23,9 @@ Start:
     ld [$FF40], a ; $FF40の7bit目を0にする(LCD表示オフ)
 
     ; フォント取得処理
-    ld hl, $9000
-    ld de, FontTiles
-    ld bc, FontTilesEnd - FontTiles
+    ld hl, $9000                    ; CHR-ROM位置?
+    ld de, FontTiles                ; フォント格納番地
+    ld bc, FontTilesEnd - FontTiles ; フォント数
 .copyFont
     ld a, [de]       ; メモリから1バイト取得
     ld [hli], a      ; VRAMに配置して，インクリメント 
@@ -36,7 +38,7 @@ Start:
     ; $9800~$9BFFはBG Map Data1
     ; 「32*32=1024」，「$9800-$9BFF=$3FF=1023」より1024バイト分ある
     ld hl, $9800         ; 画面左上を指定
-    ld de, HelloWorldStr ; 
+    ld de, HelloWorldStr ; 文字列格納番地を指定
 .copyString
     ; $9800番地に文字列を転送
     ld a, [de]
