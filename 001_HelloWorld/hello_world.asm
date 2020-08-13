@@ -12,13 +12,13 @@ db $BB, $BB, $67, $63, $6E, $0E, $EC, $CC
 db $DD, $DC, $99, $9F, $BB, $B9, $33, $3E
 ; タイトル: $0134~$013E
 ; 古いカートリッジだと$0134~0143までタイトル(15バイト)
-db "HELLO_WORLD"
+db "HELLO_WORLD" ; 適当に決めた
 ; メーカーコード: $013F~$0142
-db "LMDA"
+db "LMDA"        ; 適当に決めた
 ; CGBフラグ: $0143 
 db $00
 ; 新しいライセンスコード: $0144~$0145
-db "XX"
+db "XX"          ; 適当に決めた
 ; SGBフラグ: $0146 (非対応: 00h，対応: 03h)
 db $03
 ; カートリッジタイプ: $0147
@@ -36,7 +36,7 @@ db $00
 ; チェックサム: $014D
 db $88
 ; グローバルチェックサム: $014E~$014F
-dw $06A2
+dw $ae01
 
 SECTION "Game Code", rom0[$150]
 Start:
@@ -103,3 +103,9 @@ FontTilesEnd:
 SECTION "Hello World string", rom0
 HelloWorldStr:
     db "HELLO, WORLD!", 0 ; 表示文字列＋終端文字(今回は0)
+
+; 残りのROMを0埋めする
+SECTION "PADDING", romx
+rept $7fff - $4000
+    db 0
+endr

@@ -18,17 +18,18 @@ int main(int argc, char *argv[])
 	}
 	rom_file.close();
 	
-	int x = 0;
+	std::int16_t x = 0;
 	for(int i = 0x0134;i <= 0x014C; ++i)
 	{
-		x = x - static_cast<int>(rom_data[i]) - 1;
+		x = x - static_cast<int>(rom_data[i]&0xff) - 1;
 	}
 	std::cout << "Header CheckSum: $" << std::hex << (x & 0xff) << std::endl;
 	
-	int y = 0;
-	for(auto itr = rom_data.begin();itr != rom_data.end();++itr)
+	std::uint16_t y = 0;
+	for(int i = 0x0000;i < rom_data.size();++i)
 	{
-		y = y - static_cast<int>(*itr) - 1;
+		if(i == 0x014e || i == 0x014f) continue;
+		y += static_cast<int>(rom_data[i]&0xff);
 	}
 	std::cout << "Global CheckSum: $" << std::hex << (y & 0xffff) << std::endl;
 
