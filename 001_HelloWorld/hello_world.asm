@@ -83,8 +83,8 @@ Start:
     ld [$FF47], a   ; $FF47は「背景パレットデータ(BGP)」
     ; 画面位置
     xor a, a      ; アキュームレータのクリア
-    ld [$FF42], a ; LCDC-Xを0
-    ld [$FF43], a ; LCDC-Yを0
+    ld [$FF42], a ; LCDC-Yを0
+    ld [$FF43], a ; LCDC-Xを0
     ; サウンド設定
     ; $FF26は「サウンドオン・オフ切り替え」
     ld [$FF26], a   ; サウンドオフ(bit-7が0)
