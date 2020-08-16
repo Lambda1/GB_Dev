@@ -18,7 +18,7 @@ SECTION "RST30", rom0[$0030]
 SECTION "RST38", rom0[$0038]
     ret
 SECTION "VBlank", rom0[$0040]
-    jp VBLANK
+    reti
 SECTION "LCDC", rom0[$0048]
     reti 
 SECTION "TIMER_OVERFLOW", rom0[$0050]
@@ -26,9 +26,6 @@ SECTION "TIMER_OVERFLOW", rom0[$0050]
 SECTION "SERIAL", rom0[$0058]
     reti 
 SECTION "JOYPAD", rom0[$0060]
-    reti
-
-VBLANK:
     reti
 
 ; Cartridge Header
@@ -85,7 +82,7 @@ ENTRY_POINT:       ; $0100-$0103
 .HeaderChecksum   ; $014D
     db $48 ; calculate checksum
 .GlobalChecksum   ; $014E-$014F
-    dw $ab27 ; calculate checksum
+    dw $8726 ; calculate checksum
 
 ; Program code
 ; $0150~$3FFF
