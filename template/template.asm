@@ -28,10 +28,13 @@ SECTION "SERIAL", rom0[$0058]
 SECTION "JOYPAD", rom0[$0060]
     reti
 
+VBLANK:
+    reti
+
 ; Cartridge Header
 ; $0100~$014F
 SECTION "CARTRIDGE_HEADER", rom0[$0100]
-.EntryPoint       ; $0100-$0103
+ENTRY_POINT:       ; $0100-$0103
     nop 
     jp START
 .NintendoLogo     ; $0104-$0133
@@ -49,11 +52,12 @@ SECTION "CARTRIDGE_HEADER", rom0[$0100]
     db "MNCD"
 ; Support CGB: $80
 ;    CGB Only: $C0
+;         DMG: $00
 .CGBFlag          ; $0143
-    db $80
+    db $00
 ; 2Byte ASCII
 .NewLicenseeCode  ; $0144-$0145
-    db $00
+    dw $0000
 ;      NO SGB: $00
 ; Support SGB: $03
 .SGBFlag          ; $0146
@@ -79,9 +83,9 @@ SECTION "CARTRIDGE_HEADER", rom0[$0100]
     db $00
 ; Header checksum
 .HeaderChecksum   ; $014D
-    db $00 ; calculate checksum
+    db $48 ; calculate checksum
 .GlobalChecksum   ; $014E-$014F
-    db $00 ; calculate checksum
+    dw $ab27 ; calculate checksum
 
 ; Program code
 ; $0150~$3FFF
@@ -95,9 +99,6 @@ START:
 ; $4000~$7FFF
 ; -----
 SECTION "ROM_BANK_N", romx[$4000]
-rept $8000-$4000
+rept $7FFF-$4000
     db $00
 endr
-
-VBLANK:
-    reti

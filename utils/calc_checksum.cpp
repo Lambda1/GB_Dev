@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		if(i == 0x014e || i == 0x014f) continue;
 		y += static_cast<int>(rom_data[i]&0xff);
 	}
-	std::cout << "Global CheckSum: $" << std::hex << (y & 0xffff) << std::endl;
+	std::cout << "Global CheckSum: $" << std::hex << (y & 0x00ff) << ((y & 0xff00) >> 8) << std::endl;
 
 
 	return 0;
